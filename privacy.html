@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="CaptureKit privacy policy — 100% local by default, no accounts, no analytics. Optional sharing services (Slack, Google Drive) are off until you turn them on." />
+<title>Privacy Policy — CaptureKit</title>
+<link rel="icon" type="image/png" href="./favicon.png" />
+<link rel="apple-touch-icon" href="./logo.png" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #fafaff;
+    --fg: #14142b;
+    --fg-soft: #2a2a4a;
+    --muted: #6b6b8a;
+    --panel: #f5f5fb;
+    --panel-2: #ecebf6;
+    --border: #e4e4ee;
+    --accent: #4f46e5;
+    --accent-2: #a855f7;
+    --accent-hover: #4338ca;
+    --success: #10b981;
+    --shadow-sm: 0 2px 6px rgba(20,20,43,.06);
+    --shadow-md: 0 8px 24px rgba(20,20,43,.09);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e0e18; --bg-alt: #14141f; --fg: #f0f0f7; --fg-soft: #d6d6e0;
+      --muted: #9a9ab3; --panel: #1a1a26; --panel-2: #22222f; --border: #2a2a3a;
+      --accent: #7c78ff; --accent-2: #b78dff; --accent-hover: #9591ff; --success: #34d399;
+      --shadow-sm: 0 2px 6px rgba(0,0,0,.3);
+      --shadow-md: 0 8px 24px rgba(0,0,0,.45);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; transition: color .15s; }
+  a:hover { color: var(--accent-hover); }
+  code { background: var(--panel); border: 1px solid var(--border); padding: 1px 6px; border-radius: 5px; font-size: 0.9em; font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace; }
+
+  /* Sticky nav — same as landing page */
+  nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(1.4) blur(10px);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { max-width: 1120px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 18px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--fg); font-size: 15px; }
+  .nav-brand img { width: 28px; height: 28px; border-radius: 6px; }
+  .nav-links { margin-left: auto; display: flex; gap: 18px; align-items: center; font-size: 14px; }
+  .nav-links a { color: var(--fg-soft); font-weight: 500; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 14px; border-radius: 8px; font-weight: 600; }
+  .nav-cta:hover { background: var(--accent-hover); }
+  @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* Hero — smaller than landing, matched palette */
+  .hero {
+    padding: 64px 24px 40px;
+    background:
+      radial-gradient(1000px 300px at 50% -100px, rgba(79,70,229,.14), transparent 60%),
+      radial-gradient(700px 240px at 90% 0, rgba(168,85,247,.10), transparent 60%),
+      var(--bg);
+    text-align: center;
+  }
+  .badge-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px;
+    background: var(--panel); border: 1px solid var(--border);
+    font-size: 13px; font-weight: 600; color: var(--fg-soft);
+  }
+  .badge-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
+  .hero h1 {
+    font-size: clamp(30px, 4.5vw, 44px); line-height: 1.1; letter-spacing: -.02em;
+    margin: 20px auto 12px; max-width: 720px; font-weight: 800;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .updated { color: var(--muted); font-size: 14px; margin: 0; }
+
+  /* Layout: two-column at wide, single at narrow */
+  .layout {
+    max-width: 1120px; margin: 40px auto 80px; padding: 0 24px;
+    display: grid; grid-template-columns: 240px 1fr; gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; gap: 24px; } .toc { position: static; } }
+
+  /* Sticky table of contents */
+  .toc {
+    position: sticky; top: 76px;
+    padding: 20px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  }
+  .toc-title { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 700; margin-bottom: 12px; }
+  .toc a {
+    display: block; padding: 6px 10px; margin: 2px 0;
+    border-radius: 6px; color: var(--fg-soft); font-size: 13px; font-weight: 500;
+    border-left: 2px solid transparent;
+  }
+  .toc a:hover { background: var(--bg); color: var(--accent); border-left-color: var(--accent); }
+  .toc a.active { background: var(--bg); color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+
+  /* Article */
+  article { min-width: 0; }
+  .summary-card {
+    padding: 20px 24px; margin-bottom: 40px;
+    background: linear-gradient(135deg, rgba(79,70,229,.08), rgba(168,85,247,.06));
+    border: 1px solid var(--border); border-left: 4px solid var(--accent);
+    border-radius: 12px;
+  }
+  .summary-card p { margin: 0; font-size: 15px; color: var(--fg-soft); }
+  .summary-card strong { color: var(--fg); }
+
+  section.chunk { margin-bottom: 44px; scroll-margin-top: 80px; }
+  section.chunk h2 {
+    font-size: 22px; letter-spacing: -.01em; margin: 0 0 8px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.chunk h2 .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-size: 12px; font-weight: 800;
+    box-shadow: var(--shadow-sm);
+  }
+  section.chunk h3 { font-size: 15px; font-weight: 700; margin: 20px 0 6px; color: var(--fg); }
+  section.chunk p { margin: 10px 0; color: var(--fg-soft); font-size: 15px; }
+  section.chunk ul { padding-left: 20px; margin: 10px 0; }
+  section.chunk ul li { margin: 6px 0; color: var(--fg-soft); font-size: 15px; line-height: 1.55; }
+  section.chunk ul li strong { color: var(--fg); }
+
+  /* Special "does" / "does not" callouts */
+  .does-list, .doesnot-list {
+    padding: 16px 20px; border-radius: 10px; margin: 12px 0;
+  }
+  .does-list { background: rgba(16, 185, 129, .06); border: 1px solid rgba(16, 185, 129, .25); }
+  .doesnot-list { background: rgba(239, 68, 68, .05); border: 1px solid rgba(239, 68, 68, .2); }
+  .does-list ul, .doesnot-list ul { margin: 0; }
+  .does-list li::marker { color: var(--success); }
+  .doesnot-list li::marker { color: #ef4444; }
+
+  /* Service tiles inside "Optional sharing services" */
+  .svc-tile {
+    padding: 20px; margin: 12px 0;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  }
+  .svc-tile h3 { margin: 0 0 8px; display: flex; align-items: center; gap: 10px; }
+  .svc-tile .svc-badge {
+    display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  }
+  .svc-badge.local { background: rgba(16, 185, 129, .15); color: var(--success); }
+  .svc-badge.optin { background: rgba(79, 70, 229, .15); color: var(--accent); }
+  .svc-badge.disabled { background: var(--panel-2); color: var(--muted); }
+  .svc-tile p { margin: 6px 0; }
+
+  /* Contact block */
+  .contact-card {
+    padding: 20px 24px; margin: 40px 0 0;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .contact-card .avatar {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .contact-card p { margin: 0; font-size: 14px; }
+  .contact-card strong { display: block; color: var(--fg); font-size: 15px; margin-bottom: 2px; }
+
+  /* Back button */
+  .back {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 10px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--fg); font-weight: 600; font-size: 14px;
+    margin-top: 32px;
+  }
+  .back:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Footer */
+  footer {
+    padding: 32px 24px; border-top: 1px solid var(--border); background: var(--bg);
+    color: var(--muted); font-size: 13px; margin-top: 40px;
+  }
+  .footer-inner {
+    max-width: 1120px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center;
+  }
+  .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  .footer-links a { color: var(--muted); }
+  .footer-links a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="./"><img src="./logo.png" alt="" /> CaptureKit</a>
+    <div class="nav-links">
+      <a href="./#features">Features</a>
+      <a href="./#how">How it works</a>
+      <a href="./privacy.html" style="color:var(--accent)">Privacy</a>
+      <a href="./#faq">FAQ</a>
+      <a class="nav-cta" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Install</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="badge-pill"><span class="dot"></span> No accounts · No analytics · No uploads by default</span>
+  <h1>Privacy <span class="grad">policy.</span></h1>
+  <p class="updated">Last updated: 8 September 2026 · Applies to CaptureKit v1.6 and later</p>
+</section>
+
+<div class="layout">
+
+  <!-- Sticky TOC -->
+  <aside class="toc" id="toc" aria-label="Table of contents">
+    <div class="toc-title">On this page</div>
+    <a href="#summary">Summary</a>
+    <a href="#what-does">What we do with your data</a>
+    <a href="#what-doesnt">What we don't do</a>
+    <a href="#optional">Optional sharing services</a>
+    <a href="#permissions">Permissions</a>
+    <a href="#retention">Data retention</a>
+    <a href="#third-parties">Third parties</a>
+    <a href="#google-api">Google API disclosure</a>
+    <a href="#changes">Changes</a>
+    <a href="#contact">Contact</a>
+  </aside>
+
+  <article>
+    <div class="summary-card">
+      <p><strong>The short version:</strong> CaptureKit is 100% local by default. No accounts, no analytics, no uploads, no tracking. The extension only touches the network if you explicitly turn on a specific sharing service in Settings — and even then, only when you click its button in the editor.</p>
+    </div>
+
+    <p>CaptureKit ("the extension") is a browser extension that captures screenshots of web pages and lets you annotate, blur, crop, and save them. This policy explains exactly what the extension does and does not do with your data.</p>
+
+    <section class="chunk" id="summary">
+      <h2><span class="num">1</span> Summary</h2>
+      <p>Everything that isn't required to render a screenshot on your own device is optional and off by default. You are the only party that ever sees your captures unless you explicitly send them somewhere.</p>
+    </section>
+
+    <section class="chunk" id="what-does">
+      <h2><span class="num">2</span> What the extension does with your data</h2>
+      <div class="does-list">
+        <ul>
+          <li><strong>Page content you choose to capture.</strong> When you click "Capture," the extension reads the visual contents of the active tab to produce the screenshot. The image is held only in your browser's local storage for the duration of editing.</li>
+          <li><strong>The screenshot you create.</strong> Annotations, crops, and blurs are applied locally on your device. The final image is saved only when you explicitly click Download (to your computer), Copy (to your clipboard), Reopen, or one of the opt-in sharing service buttons.</li>
+          <li><strong>Editable PNG metadata.</strong> Every PNG export embeds a small compressed metadata chunk with your shapes and base image so the file can be reopened and re-edited later. This metadata lives inside the PNG file on your device; it is not sent anywhere.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="chunk" id="what-doesnt">
+      <h2><span class="num">3</span> What the extension does NOT do (by default)</h2>
+      <div class="doesnot-list">
+        <ul>
+          <li>Does not send your screenshots or browsing data to any server.</li>
+          <li>Does not use analytics, advertising, tracking, or fingerprinting.</li>
+          <li>Does not read your browsing history, cookies, passwords, or form data.</li>
+          <li>Does not create user accounts or require sign-in for core features.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="chunk" id="optional">
+      <h2><span class="num">4</span> Optional sharing services (off by default)</h2>
+      <p>CaptureKit v1.6 introduced an optional layer of sharing integrations. All are governed by a master switch (<strong>Enable sharing services</strong>) in Settings that is <strong>off by default</strong>. Each individual service is a separate per-service toggle, also off by default. Turning the master switch on does not by itself send anything anywhere — you must additionally enable a specific service AND click its button in the editor.</p>
+
+      <div class="svc-tile">
+        <h3>Copy Slack markdown <span class="svc-badge local">Local · No network</span></h3>
+        <p>Formats a Slack-ready caption line locally and copies both the caption and the image to your system clipboard. Nothing leaves your device.</p>
+      </div>
+
+      <div class="svc-tile">
+        <h3>Save to Google Drive <span class="svc-badge optin">Opt-in · Your account</span></h3>
+        <p>When enabled and clicked, the extension uses Chrome's built-in Google sign-in (<code>chrome.identity</code>) to obtain an OAuth token scoped to <code>drive.file</code> and uploads the current image to <strong>your own</strong> Google Drive. Specifically:</p>
+        <ul>
+          <li>CaptureKit can only see and modify files it uploads itself. It cannot read, list, or touch anything else in your Drive.</li>
+          <li>The uploaded file appears in your Drive under your account, owned by you. You can share, move, or delete it like any other Drive file.</li>
+          <li>Your Google credentials are handled entirely by Chrome. The extension never sees your password or your session cookies.</li>
+          <li>Only the image bytes and the filename are transmitted, and only to <code>www.googleapis.com</code>, and only when you click "Save to Google Drive."</li>
+        </ul>
+      </div>
+
+      <div class="svc-tile">
+        <h3>Imgur <span class="svc-badge disabled">Temporarily unavailable</span></h3>
+        <p>The Imgur toggle is currently disabled and hidden from the Share menu until an Imgur Client-ID is configured. When enabled, it would upload an anonymous (accountless) image to <code>imgur.com</code> and copy the returned URL. Anonymous Imgur posts are publicly viewable to anyone with the URL.</p>
+      </div>
+    </section>
+
+    <section class="chunk" id="permissions">
+      <h2><span class="num">5</span> Permissions and why they are needed</h2>
+      <ul>
+        <li><code>activeTab</code> — to capture the visible content of the page you are on when you ask for a screenshot.</li>
+        <li><code>scripting</code> — to measure the page and scroll it while stitching a full-page or scrolling capture, and to run the region / element picker overlays.</li>
+        <li><code>downloads</code> — to save the screenshot file you create to your computer.</li>
+        <li><code>storage</code> / <code>unlimitedStorage</code> — to temporarily pass the captured image to the preview/editor tab; large full-page captures can exceed the default storage limit. Entries are removed automatically.</li>
+        <li><code>tabs</code> — to identify the active tab for capture and open the editor tab.</li>
+        <li><code>identity</code> — used <em>only</em> when you opt in to Google Drive uploads, to obtain an OAuth token via Chrome's built-in sign-in. Never used otherwise.</li>
+        <li><code>host_permissions</code> for <code>api.imgur.com</code> and <code>www.googleapis.com</code> — required by the browser to allow authenticated requests to these hosts <em>if</em> the corresponding sharing service is enabled and used. No requests are made otherwise.</li>
+      </ul>
+    </section>
+
+    <section class="chunk" id="retention">
+      <h2><span class="num">6</span> Data retention</h2>
+      <p>Captured images are stored only temporarily in your browser while you edit them. Stale entries are purged automatically. Recent captures (the optional "history" feature) live entirely in your browser's local storage — never on any server — and can be cleared by turning history off or reducing the cap in Settings.</p>
+      <p>Files you upload via an opt-in sharing service live wherever that service stores them: in your own Google Drive, or in a public Imgur post. Their retention is governed by that service's own privacy policy.</p>
+    </section>
+
+    <section class="chunk" id="third-parties">
+      <h2><span class="num">7</span> Third parties</h2>
+      <p>The extension does not integrate with third parties by default. If you turn on an optional sharing service, the extension exchanges data with that service only, only when you click the corresponding button:</p>
+      <ul>
+        <li>Google Drive — see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+        <li>Imgur (when re-enabled) — see <a href="https://imgur.com/privacy" target="_blank" rel="noopener">Imgur's Privacy Policy</a>.</li>
+      </ul>
+    </section>
+
+    <section class="chunk" id="google-api">
+      <h2><span class="num">8</span> Google API user-data disclosure</h2>
+      <p>CaptureKit's use of information received from Google APIs adheres to <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google's API Services User Data Policy</a>, including the Limited Use requirements. Specifically:</p>
+      <div class="does-list">
+        <ul>
+          <li>Google user data (the OAuth token and Drive files created by CaptureKit) is used solely to upload the current screenshot to your Drive at your request.</li>
+          <li>The extension does not transfer this data to any other party.</li>
+          <li>The extension does not use this data for advertising.</li>
+          <li>The extension does not allow humans to read this data, and there is no server-side component — all handling is client-side in your browser.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="chunk" id="changes">
+      <h2><span class="num">9</span> Changes to this policy</h2>
+      <p>If this policy changes, the updated version will be posted at this URL with a new "Last updated" date. Material changes will also be noted in the extension's release notes.</p>
+    </section>
+
+    <section class="chunk" id="contact">
+      <h2><span class="num">10</span> Contact</h2>
+      <div class="contact-card">
+        <div class="avatar" aria-hidden="true">✉</div>
+        <p>
+          <strong>Questions about this policy or a data request?</strong>
+          Email <a href="mailto:araza5193@gmail.com">araza5193@gmail.com</a>
+        </p>
+      </div>
+    </section>
+
+    <a class="back" href="./">← Back to CaptureKit</a>
+  </article>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 CaptureKit. Built by <a href="mailto:araza5193@gmail.com">Ali Raza Arshad</a>.</span>
+    <div class="footer-links">
+      <a href="./">Home</a>
+      <a href="mailto:araza5193@gmail.com">Support</a>
+      <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-spy: highlight the TOC entry for the section currently in view.
+  (function () {
+    const links = document.querySelectorAll('.toc a');
+    const map = new Map();
+    links.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) map.set(el, a);
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(a => a.classList.remove('active'));
+          const active = map.get(entry.target);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    map.forEach((_, el) => io.observe(el));
+  })();
+</script>
+
+</body>
+</html>
