@@ -1,490 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="google-site-verification" content="U3epPt-Chwufzj_GuScj_Ecf_4swGxDBR84gJS-QU8w" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="CaptureKit — full-page screenshots, annotation, and export for Chrome. 100% local by default. Callouts, redact, spotlight, PDF/PNG/JPEG, editable PNGs." />
-<meta property="og:title" content="CaptureKit — Full Page Screenshot & Annotate" />
-<meta property="og:description" content="Capture entire web pages, annotate with pro tools, export as editable PNG. 100% local by default." />
-<meta property="og:image" content="./hero.png" />
-<title>CaptureKit — Full Page Screenshot & Annotate for Chrome</title>
-<link rel="icon" type="image/png" href="./favicon.png" />
-<link rel="apple-touch-icon" href="./logo.png" />
-<style>
-  :root {
-    --bg: #ffffff;
-    --bg-alt: #fafaff;
-    --fg: #14142b;
-    --fg-soft: #2a2a4a;
-    --muted: #6b6b8a;
-    --panel: #f5f5fb;
-    --panel-2: #ecebf6;
-    --border: #e4e4ee;
-    --accent: #4f46e5;
-    --accent-2: #a855f7;
-    --accent-hover: #4338ca;
-    --success: #10b981;
-    --shadow-sm: 0 2px 6px rgba(20,20,43,.06);
-    --shadow-md: 0 8px 24px rgba(20,20,43,.09);
-    --shadow-lg: 0 20px 50px rgba(79,70,229,.18);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e0e18; --bg-alt: #14141f; --fg: #f0f0f7; --fg-soft: #d6d6e0;
-      --muted: #9a9ab3; --panel: #1a1a26; --panel-2: #22222f; --border: #2a2a3a;
-      --accent: #7c78ff; --accent-2: #b78dff; --accent-hover: #9591ff; --success: #34d399;
-      --shadow-sm: 0 2px 6px rgba(0,0,0,.3);
-      --shadow-md: 0 8px 24px rgba(0,0,0,.45);
-      --shadow-lg: 0 20px 50px rgba(124,120,255,.25);
-    }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: -apple-system, "Segoe UI", Roboto, "Inter", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
-  img { max-width: 100%; display: block; }
-  a { color: var(--accent); text-decoration: none; transition: color .15s; }
-  a:hover { color: var(--accent-hover); }
+    <meta charset="UTF-8" />
+    <meta name="google-site-verification" content="U3epPt-Chwufzj_GuScj_Ecf_4swGxDBR84gJS-QU8w" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CaptureKit — full-page screenshots, annotation, and export for Chrome, Firefox, and Edge. 100% local by default. Callouts, redact, spotlight, PDF/PNG/JPEG, editable PNGs." />
+    <meta property="og:title" content="CaptureKit — Full Page Screenshot & Annotate" />
+    <meta property="og:description" content="Capture entire web pages, annotate with pro tools, export as editable PNG. 100% local by default." />
+    <meta property="og:image" content="./hero.png" />
+    <title>CaptureKit — Full Page Screenshot & Annotate for Chrome, Firefox &amp; Edge</title>
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <link rel="apple-touch-icon" href="./logo.png" />
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-alt: #fafaff;
+            --fg: #14142b;
+            --fg-soft: #2a2a4a;
+            --muted: #6b6b8a;
+            --panel: #f5f5fb;
+            --panel-2: #ecebf6;
+            --border: #e4e4ee;
+            --accent: #4f46e5;
+            --accent-2: #a855f7;
+            --accent-hover: #4338ca;
+            --success: #10b981;
+            --shadow-sm: 0 2px 6px rgba(20,20,43,.06);
+            --shadow-md: 0 8px 24px rgba(20,20,43,.09);
+            --shadow-lg: 0 20px 50px rgba(79,70,229,.18);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0e0e18; --bg-alt: #14141f; --fg: #f0f0f7; --fg-soft: #d6d6e0;
+                --muted: #9a9ab3; --panel: #1a1a26; --panel-2: #22222f; --border: #2a2a3a;
+                --accent: #7c78ff; --accent-2: #b78dff; --accent-hover: #9591ff; --success: #34d399;
+                --shadow-sm: 0 2px 6px rgba(0,0,0,.3);
+                --shadow-md: 0 8px 24px rgba(0,0,0,.45);
+                --shadow-lg: 0 20px 50px rgba(124,120,255,.25);
+            }
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: -apple-system, "Segoe UI", Roboto, "Inter", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+        img { max-width: 100%; display: block; }
+        a { color: var(--accent); text-decoration: none; transition: color .15s; }
+        a:hover { color: var(--accent-hover); }
 
-  /* Sticky nav */
-  nav {
-    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(1.4) blur(10px);
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-inner { max-width: 1120px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 18px; }
-  .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--fg); font-size: 15px; }
-  .nav-brand img { width: 28px; height: 28px; border-radius: 6px; }
-  .nav-links { margin-left: auto; display: flex; gap: 18px; align-items: center; font-size: 14px; }
-  .nav-links a { color: var(--fg-soft); font-weight: 500; }
-  .nav-links a:hover { color: var(--accent); }
-  .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 14px; border-radius: 8px; font-weight: 600; }
-  .nav-cta:hover { background: var(--accent-hover); }
-  @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
+        /* Sticky nav */
+        nav {
+            position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(1.4) blur(10px);
+            background: color-mix(in srgb, var(--bg) 82%, transparent);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner { max-width: 1120px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 18px; }
+        .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--fg); font-size: 15px; }
+        .nav-brand img { width: 28px; height: 28px; border-radius: 6px; }
+        .nav-links { margin-left: auto; display: flex; gap: 18px; align-items: center; font-size: 14px; }
+        .nav-links a { color: var(--fg-soft); font-weight: 500; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 14px; border-radius: 8px; font-weight: 600; }
+        .nav-cta:hover { background: var(--accent-hover); }
+        @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
 
-  /* Hero */
-  .hero {
-    position: relative; overflow: hidden;
-    padding: 80px 24px 60px;
-    background:
-      radial-gradient(1200px 400px at 50% -100px, rgba(79,70,229,.15), transparent 60%),
-      radial-gradient(800px 300px at 90% 0, rgba(168,85,247,.12), transparent 60%),
-      var(--bg);
-  }
-  .hero-inner { max-width: 1120px; margin: 0 auto; text-align: center; }
-  .badge-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 14px; border-radius: 999px;
-    background: var(--panel); border: 1px solid var(--border);
-    font-size: 13px; font-weight: 600; color: var(--fg-soft);
-  }
-  .badge-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
-  h1 {
-    font-size: clamp(34px, 5.5vw, 56px); line-height: 1.08; letter-spacing: -.03em;
-    margin: 22px auto 18px; max-width: 800px; font-weight: 800;
-  }
-  h1 .grad {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .hero p.lede {
-    font-size: clamp(16px, 2vw, 19px); color: var(--muted);
-    max-width: 620px; margin: 0 auto 28px; line-height: 1.55;
-  }
-  .cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 13px 22px; border-radius: 10px; font-weight: 600; font-size: 15px;
-    transition: transform .1s, background .15s, border-color .15s, color .15s;
-    border: 1px solid transparent;
-  }
-  .btn:active { transform: translateY(1px); }
-  .btn.primary { background: var(--accent); color: #fff; box-shadow: var(--shadow-md); }
-  .btn.primary:hover { background: var(--accent-hover); color: #fff; }
-  .btn.ghost { background: var(--bg); color: var(--fg); border-color: var(--border); }
-  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+        /* Hero */
+        .hero {
+            position: relative; overflow: hidden;
+            padding: 80px 24px 60px;
+            background:
+                    radial-gradient(1200px 400px at 50% -100px, rgba(79,70,229,.15), transparent 60%),
+                    radial-gradient(800px 300px at 90% 0, rgba(168,85,247,.12), transparent 60%),
+                    var(--bg);
+        }
+        .hero-inner { max-width: 1120px; margin: 0 auto; text-align: center; }
+        .badge-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border-radius: 999px;
+            background: var(--panel); border: 1px solid var(--border);
+            font-size: 13px; font-weight: 600; color: var(--fg-soft);
+        }
+        .badge-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
+        h1 {
+            font-size: clamp(34px, 5.5vw, 56px); line-height: 1.08; letter-spacing: -.03em;
+            margin: 22px auto 18px; max-width: 800px; font-weight: 800;
+        }
+        h1 .grad {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .hero p.lede {
+            font-size: clamp(16px, 2vw, 19px); color: var(--muted);
+            max-width: 620px; margin: 0 auto 28px; line-height: 1.55;
+        }
+        .cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 22px; border-radius: 10px; font-weight: 600; font-size: 15px;
+            transition: transform .1s, background .15s, border-color .15s, color .15s;
+            border: 1px solid transparent;
+        }
+        .btn:active { transform: translateY(1px); }
+        .btn.primary { background: var(--accent); color: #fff; box-shadow: var(--shadow-md); }
+        .btn.primary:hover { background: var(--accent-hover); color: #fff; }
+        .btn.ghost { background: var(--bg); color: var(--fg); border-color: var(--border); }
+        .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-  .hero-shot {
-    max-width: 1000px; margin: 48px auto 0;
-    border-radius: 16px; overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
-  }
-  .hero-shot img { width: 100%; height: auto; }
+        .hero-shot {
+            max-width: 1000px; margin: 48px auto 0;
+            border-radius: 16px; overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+        .hero-shot img { width: 100%; height: auto; }
 
-  /* Section shell */
-  section { padding: 72px 24px; }
-  .section-inner { max-width: 1120px; margin: 0 auto; }
-  .section-eyebrow { color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
-  h2 { font-size: clamp(26px, 3vw, 36px); letter-spacing: -.02em; margin: 8px 0 12px; font-weight: 700; }
-  .section-lead { color: var(--muted); font-size: 17px; max-width: 640px; margin: 0 0 40px; }
-  .section-head { text-align: center; margin-bottom: 40px; }
-  .section-head .section-lead { margin: 0 auto; }
+        /* Section shell */
+        section { padding: 72px 24px; }
+        .section-inner { max-width: 1120px; margin: 0 auto; }
+        .section-eyebrow { color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+        h2 { font-size: clamp(26px, 3vw, 36px); letter-spacing: -.02em; margin: 8px 0 12px; font-weight: 700; }
+        .section-lead { color: var(--muted); font-size: 17px; max-width: 640px; margin: 0 0 40px; }
+        .section-head { text-align: center; margin-bottom: 40px; }
+        .section-head .section-lead { margin: 0 auto; }
 
-  .alt { background: var(--bg-alt); }
+        .alt { background: var(--bg-alt); }
 
-  /* Screenshot tabs */
-  .shot-tabs {
-    display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
-    margin-bottom: 24px;
-  }
-  .shot-tab {
-    padding: 9px 16px; border-radius: 999px; border: 1px solid var(--border);
-    background: var(--panel); color: var(--fg-soft); font-weight: 600; font-size: 13px;
-    cursor: pointer; transition: all .15s;
-  }
-  .shot-tab:hover { border-color: var(--accent); color: var(--accent); }
-  .shot-tab[aria-selected="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .shot-frame {
-    max-width: 1000px; margin: 0 auto; border-radius: 14px; overflow: hidden;
-    box-shadow: var(--shadow-md); border: 1px solid var(--border); background: var(--panel);
-    position: relative; aspect-ratio: 1280 / 800;
-  }
-  .shot-frame img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-    opacity: 0; transition: opacity .25s ease-in-out;
-  }
-  .shot-frame img.active { opacity: 1; }
-  .shot-caption { text-align: center; color: var(--muted); margin: 14px auto 0; font-size: 14px; max-width: 600px; }
+        /* Screenshot tabs */
+        .shot-tabs {
+            display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+            margin-bottom: 24px;
+        }
+        .shot-tab {
+            padding: 9px 16px; border-radius: 999px; border: 1px solid var(--border);
+            background: var(--panel); color: var(--fg-soft); font-weight: 600; font-size: 13px;
+            cursor: pointer; transition: all .15s;
+        }
+        .shot-tab:hover { border-color: var(--accent); color: var(--accent); }
+        .shot-tab[aria-selected="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .shot-frame {
+            max-width: 1000px; margin: 0 auto; border-radius: 14px; overflow: hidden;
+            box-shadow: var(--shadow-md); border: 1px solid var(--border); background: var(--panel);
+            position: relative; aspect-ratio: 1280 / 800;
+        }
+        .shot-frame img {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0; transition: opacity .25s ease-in-out;
+        }
+        .shot-frame img.active { opacity: 1; }
+        .shot-caption { text-align: center; color: var(--muted); margin: 14px auto 0; font-size: 14px; max-width: 600px; }
 
-  /* Features grid */
-  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-  .feature {
-    padding: 24px; border: 1px solid var(--border); border-radius: 14px;
-    background: var(--bg); transition: transform .15s, box-shadow .15s, border-color .15s;
-  }
-  .feature:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--accent); }
-  .feature .icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: #fff; display: inline-flex; align-items: center; justify-content: center;
-    font-size: 22px; margin-bottom: 14px;
-    box-shadow: 0 4px 12px rgba(79,70,229,.25);
-  }
-  .feature h3 { font-size: 16px; margin: 0 0 6px; font-weight: 700; }
-  .feature p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+        /* Features grid */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+        .feature {
+            padding: 24px; border: 1px solid var(--border); border-radius: 14px;
+            background: var(--bg); transition: transform .15s, box-shadow .15s, border-color .15s;
+        }
+        .feature:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--accent); }
+        .feature .icon {
+            width: 44px; height: 44px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff; display: inline-flex; align-items: center; justify-content: center;
+            font-size: 22px; margin-bottom: 14px;
+            box-shadow: 0 4px 12px rgba(79,70,229,.25);
+        }
+        .feature h3 { font-size: 16px; margin: 0 0 6px; font-weight: 700; }
+        .feature p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
 
-  /* Steps */
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; counter-reset: step; }
-  .step { padding: 24px; border-radius: 14px; background: var(--panel); border: 1px solid var(--border); position: relative; }
-  .step::before {
-    counter-increment: step; content: counter(step);
-    position: absolute; top: -14px; left: 20px;
-    width: 30px; height: 30px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: #fff; font-weight: 800; font-size: 14px;
-    display: inline-flex; align-items: center; justify-content: center;
-    box-shadow: var(--shadow-sm);
-  }
-  .step h3 { margin: 8px 0 6px; font-size: 16px; }
-  .step p { margin: 0; color: var(--muted); font-size: 14px; }
+        /* Steps */
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; counter-reset: step; }
+        .step { padding: 24px; border-radius: 14px; background: var(--panel); border: 1px solid var(--border); position: relative; }
+        .step::before {
+            counter-increment: step; content: counter(step);
+            position: absolute; top: -14px; left: 20px;
+            width: 30px; height: 30px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff; font-weight: 800; font-size: 14px;
+            display: inline-flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .step h3 { margin: 8px 0 6px; font-size: 16px; }
+        .step p { margin: 0; color: var(--muted); font-size: 14px; }
 
-  /* Privacy callout */
-  .privacy-card {
-    padding: 40px; border-radius: 20px;
-    background: linear-gradient(135deg, rgba(79,70,229,.08), rgba(168,85,247,.06));
-    border: 1px solid var(--border);
-    display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
-  }
-  .privacy-card h2 { margin: 0 0 8px; }
-  .privacy-card p { color: var(--fg-soft); margin: 0 0 6px; font-size: 15px; line-height: 1.55; }
-  .privacy-card .lock {
-    width: 90px; height: 90px; border-radius: 22px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: #fff; display: inline-flex; align-items: center; justify-content: center;
-    font-size: 46px; box-shadow: var(--shadow-md); flex-shrink: 0;
-  }
-  @media (max-width: 640px) { .privacy-card { grid-template-columns: 1fr; text-align: center; } .privacy-card .lock { margin: 0 auto; } }
+        /* Privacy callout */
+        .privacy-card {
+            padding: 40px; border-radius: 20px;
+            background: linear-gradient(135deg, rgba(79,70,229,.08), rgba(168,85,247,.06));
+            border: 1px solid var(--border);
+            display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+        }
+        .privacy-card h2 { margin: 0 0 8px; }
+        .privacy-card p { color: var(--fg-soft); margin: 0 0 6px; font-size: 15px; line-height: 1.55; }
+        .privacy-card .lock {
+            width: 90px; height: 90px; border-radius: 22px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff; display: inline-flex; align-items: center; justify-content: center;
+            font-size: 46px; box-shadow: var(--shadow-md); flex-shrink: 0;
+        }
+        @media (max-width: 640px) { .privacy-card { grid-template-columns: 1fr; text-align: center; } .privacy-card .lock { margin: 0 auto; } }
 
-  /* FAQ */
-  .faq { max-width: 780px; margin: 0 auto; }
-  details {
-    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 18px 22px; margin-bottom: 10px; transition: border-color .15s;
-  }
-  details[open] { border-color: var(--accent); box-shadow: var(--shadow-sm); }
-  summary {
-    cursor: pointer; font-weight: 600; font-size: 15px; color: var(--fg);
-    list-style: none; display: flex; align-items: center; justify-content: space-between;
-  }
-  summary::-webkit-details-marker { display: none; }
-  summary::after { content: "＋"; font-weight: 300; font-size: 20px; color: var(--accent); transition: transform .2s; }
-  details[open] summary::after { transform: rotate(45deg); }
-  details p { margin: 12px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+        /* FAQ */
+        .faq { max-width: 780px; margin: 0 auto; }
+        details {
+            background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+            padding: 18px 22px; margin-bottom: 10px; transition: border-color .15s;
+        }
+        details[open] { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+        summary {
+            cursor: pointer; font-weight: 600; font-size: 15px; color: var(--fg);
+            list-style: none; display: flex; align-items: center; justify-content: space-between;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "＋"; font-weight: 300; font-size: 20px; color: var(--accent); transition: transform .2s; }
+        details[open] summary::after { transform: rotate(45deg); }
+        details p { margin: 12px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
 
-  /* Big CTA */
-  .final-cta {
-    text-align: center; padding: 80px 24px;
-    background:
-      radial-gradient(600px 200px at 50% 100%, rgba(168,85,247,.14), transparent 60%),
-      var(--bg-alt);
-  }
-  .final-cta h2 { margin-bottom: 12px; }
-  .final-cta p { color: var(--muted); margin: 0 0 24px; }
+        /* Big CTA */
+        .final-cta {
+            text-align: center; padding: 80px 24px;
+            background:
+                    radial-gradient(600px 200px at 50% 100%, rgba(168,85,247,.14), transparent 60%),
+                    var(--bg-alt);
+        }
+        .final-cta h2 { margin-bottom: 12px; }
+        .final-cta p { color: var(--muted); margin: 0 0 24px; }
 
-  /* Footer */
-  footer {
-    padding: 32px 24px; border-top: 1px solid var(--border); background: var(--bg);
-    color: var(--muted); font-size: 13px;
-  }
-  .footer-inner {
-    max-width: 1120px; margin: 0 auto;
-    display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center;
-  }
-  .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
-  .footer-links a { color: var(--muted); }
-  .footer-links a:hover { color: var(--accent); }
-</style>
+        /* Footer */
+        footer {
+            padding: 32px 24px; border-top: 1px solid var(--border); background: var(--bg);
+            color: var(--muted); font-size: 13px;
+        }
+        .footer-inner {
+            max-width: 1120px; margin: 0 auto;
+            display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center;
+        }
+        .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); }
+        .footer-links a:hover { color: var(--accent); }
+    </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-inner">
-    <a class="nav-brand" href="./">
-      <img src="./logo.png" alt="" /> CaptureKit
-    </a>
-    <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
-      <a href="#privacy">Privacy</a>
-      <a href="#faq">FAQ</a>
-      <a class="nav-cta" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Install</a>
+    <div class="nav-inner">
+        <a class="nav-brand" href="./">
+            <img src="./logo.png" alt="" /> CaptureKit
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how">How it works</a>
+            <a href="#privacy">Privacy</a>
+            <a href="#faq">FAQ</a>
+            <a class="nav-cta" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Install</a>
+        </div>
     </div>
-  </div>
 </nav>
 
 <!-- ============================================================ Hero -->
 <section class="hero">
-  <div class="hero-inner">
-    <span class="badge-pill"><span class="dot"></span> Version 1.6 · Free · No account required</span>
-    <h1>Screenshots that <span class="grad">stay editable.</span></h1>
-    <p class="lede">
-      Capture entire web pages — full page, scroll, region, or element picker — then annotate
-      with pro tools and export as PNG, JPEG, or PDF. Every PNG comes back editable when you
-      drop it in again.
-    </p>
-    <div class="cta">
-      <a class="btn primary" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">
-        Add to Chrome — Free
-      </a>
-      <a class="btn ghost" href="#features">See what's inside</a>
+    <div class="hero-inner">
+        <span class="badge-pill"><span class="dot"></span> Version 1.6 · Free · No account required</span>
+        <h1>Screenshots that <span class="grad">stay editable.</span></h1>
+        <p class="lede">
+            Capture entire web pages — full page, scroll, region, or element picker — then annotate
+            with pro tools and export as PNG, JPEG, or PDF. Every PNG comes back editable when you
+            drop it in again.
+        </p>
+        <div class="cta">
+            <a class="btn primary" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">
+                Add to Chrome — Free
+            </a>
+            <a class="btn primary" href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">
+                Add to Firefox — Free
+            </a>
+            <a class="btn ghost" href="#features">See what's inside</a>
+        </div>
+        <div class="hero-shot">
+            <img src="./hero.png" alt="CaptureKit editor with a captured web page and annotation tools" />
+        </div>
     </div>
-    <div class="hero-shot">
-      <img src="./hero.png" alt="CaptureKit editor with a captured web page and annotation tools" />
-    </div>
-  </div>
 </section>
 
 <!-- ============================================================ Screenshot tour -->
 <section id="tour" class="alt">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="section-eyebrow">Take a look</span>
-      <h2>See it in action</h2>
-      <p class="section-lead">Seven screens from the real extension. Click through to see capture, annotate, options, privacy, element picker, history, and scrolling capture.</p>
-    </div>
+    <div class="section-inner">
+        <div class="section-head">
+            <span class="section-eyebrow">Take a look</span>
+            <h2>See it in action</h2>
+            <p class="section-lead">Seven screens from the real extension. Click through to see capture, annotate, options, privacy, element picker, history, and scrolling capture.</p>
+        </div>
 
-    <div class="shot-tabs" role="tablist" id="shotTabs">
-      <button class="shot-tab" role="tab" aria-selected="true"  data-shot="capture"  data-caption="Popup: pick a capture mode (full page, scroll, visible, region, element, scroll area).">Capture modes</button>
-      <button class="shot-tab" role="tab" aria-selected="false" data-shot="annotate" data-caption="Editor: pen, arrow, shapes, callouts, text, blur, redact, spotlight, step markers, stamps.">Annotate</button>
-      <button class="shot-tab" role="tab" aria-selected="false" data-shot="options"  data-caption="Settings: theme, toolbar position, defaults, filename template, history, sharing.">Options</button>
-      <button class="shot-tab" role="tab" aria-selected="false" data-shot="privacy"  data-caption="Save panel: local-only download / copy / print. No server round-trip.">Save &amp; privacy</button>
-      <button class="shot-tab" role="tab" aria-selected="false" data-shot="element"  data-caption="Element picker: hover any element, ↑/↓ widens or narrows, click to capture just that box.">Element picker</button>
-      <button class="shot-tab" role="tab" aria-selected="false" data-shot="history"  data-caption="Recent captures gallery — multi-select, delete, save files, search. History cap is configurable.">History gallery</button>
-      <button class="shot-tab" role="tab" aria-selected="false" data-shot="scroll"   data-caption="Scrolling capture stitches long pages seam-free, even on retina displays.">Scroll capture</button>
-    </div>
+        <div class="shot-tabs" role="tablist" id="shotTabs">
+            <button class="shot-tab" role="tab" aria-selected="true"  data-shot="capture"  data-caption="Popup: pick a capture mode (full page, scroll, visible, region, element, scroll area).">Capture modes</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="annotate" data-caption="Editor: pen, arrow, shapes, callouts, text, blur, redact, spotlight, step markers, stamps.">Annotate</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="options"  data-caption="Settings: theme, toolbar position, defaults, filename template, history, sharing.">Options</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="privacy"  data-caption="Save panel: local-only download / copy / print. No server round-trip.">Save &amp; privacy</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="element"  data-caption="Element picker: hover any element, ↑/↓ widens or narrows, click to capture just that box.">Element picker</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="history"  data-caption="Recent captures gallery — multi-select, delete, save files, search. History cap is configurable.">History gallery</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="scroll"   data-caption="Scrolling capture stitches long pages seam-free, even on retina displays.">Scroll capture</button>
+        </div>
 
-    <div class="shot-frame" id="shotFrame">
-      <img class="active" data-shot="capture"  src="./screenshots/capturekit-01-capture.png"       alt="Capture modes popup" />
-      <img            data-shot="annotate" src="./screenshots/capturekit-02-annotate.png"      alt="Annotation editor" />
-      <img            data-shot="options"  src="./screenshots/capturekit-03-options.png"       alt="Settings page" />
-      <img            data-shot="privacy"  src="./screenshots/capturekit-04-save-privacy.png"  alt="Save panel with privacy note" />
-      <img            data-shot="element"  src="./screenshots/capturekit-05-element.png"       alt="Element picker in action" />
-      <img            data-shot="history"  src="./screenshots/capturekit-06-history.png"       alt="Recent captures gallery" />
-      <img            data-shot="scroll"   src="./screenshots/capturekit-07-scroll.png"        alt="Scrolling capture stitched image" />
+        <div class="shot-frame" id="shotFrame">
+            <img class="active" data-shot="capture"  src="./screenshots/capturekit-01-capture.png"       alt="Capture modes popup" />
+            <img            data-shot="annotate" src="./screenshots/capturekit-02-annotate.png"      alt="Annotation editor" />
+            <img            data-shot="options"  src="./screenshots/capturekit-03-options.png"       alt="Settings page" />
+            <img            data-shot="privacy"  src="./screenshots/capturekit-04-save-privacy.png"  alt="Save panel with privacy note" />
+            <img            data-shot="element"  src="./screenshots/capturekit-05-element.png"       alt="Element picker in action" />
+            <img            data-shot="history"  src="./screenshots/capturekit-06-history.png"       alt="Recent captures gallery" />
+            <img            data-shot="scroll"   src="./screenshots/capturekit-07-scroll.png"        alt="Scrolling capture stitched image" />
+        </div>
+        <p class="shot-caption" id="shotCaption">Popup: pick a capture mode (full page, scroll, visible, region, element, scroll area).</p>
     </div>
-    <p class="shot-caption" id="shotCaption">Popup: pick a capture mode (full page, scroll, visible, region, element, scroll area).</p>
-  </div>
 </section>
 
 <!-- ============================================================ Features -->
 <section id="features">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="section-eyebrow">Everything you need</span>
-      <h2>Built for people who ship screenshots</h2>
-      <p class="section-lead">Capture, annotate, and hand off — without leaving your browser or your privacy.</p>
-    </div>
+    <div class="section-inner">
+        <div class="section-head">
+            <span class="section-eyebrow">Everything you need</span>
+            <h2>Built for people who ship screenshots</h2>
+            <p class="section-lead">Capture, annotate, and hand off — without leaving your browser or your privacy.</p>
+        </div>
 
-    <div class="features">
-      <div class="feature">
-        <div class="icon" aria-hidden="true">📸</div>
-        <h3>Every capture mode</h3>
-        <p>Full page, scroll region, visible area, drawn box, element picker, scrollable inner containers, timer.</p>
-      </div>
-      <div class="feature">
-        <div class="icon" aria-hidden="true">✏️</div>
-        <h3>Pro annotation editor</h3>
-        <p>Pen, arrows, shapes, callouts, text with pill/outline, step markers, stamps, blur, pixelate, redact, spotlight.</p>
-      </div>
-      <div class="feature">
-        <div class="icon" aria-hidden="true">🎯</div>
-        <h3>Multi-select &amp; align</h3>
-        <p>Marquee, shift-click, group move, align, distribute, snap guides, lock/hide, z-order.</p>
-      </div>
-      <div class="feature">
-        <div class="icon" aria-hidden="true">⭐</div>
-        <h3>Style presets</h3>
-        <p>Save any tool's exact look — color, size, opacity, dash, heads — as a named preset for one-click reuse.</p>
-      </div>
-      <div class="feature">
-        <div class="icon" aria-hidden="true">✂️</div>
-        <h3>Crop presets</h3>
-        <p>Free, 1:1, 4:3, 16:9, 9:16, Twitter card, OG card, LinkedIn — enforced to the pixel on export.</p>
-      </div>
-      <div class="feature">
-        <div class="icon" aria-hidden="true">🔁</div>
-        <h3>Editable PNGs <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(79,70,229,.12);color:var(--accent);border:none">New in 1.6</span></h3>
-        <p>Every PNG carries your shapes as compressed metadata. Drop it back in later and every shape is editable again.</p>
-      </div>
-      <div class="feature">
-        <div class="icon" aria-hidden="true">📤</div>
-        <h3>Handoff, your way</h3>
-        <p>Copy image, copy data/blob URL, native share sheet, Reopen (drop, pick, or paste), Copy path after download.</p>
-      </div>
-      <div class="feature">
-        <div class="icon" aria-hidden="true">💬</div>
-        <h3>Slack &amp; Drive (opt-in)</h3>
-        <p>Copy Slack-ready markdown or save to your own Google Drive. Off by default; each service is a separate toggle.</p>
-      </div>
+        <div class="features">
+            <div class="feature">
+                <div class="icon" aria-hidden="true">📸</div>
+                <h3>Every capture mode</h3>
+                <p>Full page, scroll region, visible area, drawn box, element picker, scrollable inner containers, timer. Works on <b>app-shell apps</b> like Jira, Notion, Gmail and Linear where the whole page lives inside an inner scroll container.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">✏️</div>
+                <h3>Pro annotation editor</h3>
+                <p>Pen, arrows, shapes, callouts, text with pill/outline, step markers, stamps, blur, pixelate, redact, spotlight.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🎯</div>
+                <h3>Multi-select &amp; align</h3>
+                <p>Marquee, shift-click, group move, align, distribute, snap guides, lock/hide, z-order.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">⭐</div>
+                <h3>Style presets</h3>
+                <p>Save any tool's exact look — color, size, opacity, dash, heads — as a named preset for one-click reuse.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">✂️</div>
+                <h3>Crop presets</h3>
+                <p>Free, 1:1, 4:3, 16:9, 9:16, Twitter card, OG card, LinkedIn — enforced to the pixel on export.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🔁</div>
+                <h3>Editable PNGs <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(79,70,229,.12);color:var(--accent);border:none">New in 1.6</span></h3>
+                <p>Every PNG carries your shapes as compressed metadata. Drop it back in later and every shape is editable again.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">📤</div>
+                <h3>Handoff, your way</h3>
+                <p>Copy image, copy data/blob URL, native share sheet, Reopen (drop, pick, or paste), Copy path after download.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">💬</div>
+                <h3>Slack &amp; Drive (opt-in)</h3>
+                <p>Copy Slack-ready markdown or save to your own Google Drive. Off by default; each service is a separate toggle.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">⚡</div>
+                <h3>Fast &amp; friendly captures</h3>
+                <p>A live <b>Capturing…</b> pill shows progress on multi-band shots. Long full-page captures on complex web apps finish in roughly half the time thanks to smart throttling and content prewarming.</p>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- ============================================================ How it works -->
 <section id="how" class="alt">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="section-eyebrow">How it works</span>
-      <h2>Four clicks from page to shareable file</h2>
+    <div class="section-inner">
+        <div class="section-head">
+            <span class="section-eyebrow">How it works</span>
+            <h2>Four clicks from page to shareable file</h2>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <h3>Capture</h3>
+                <p>Pin the extension, pick a mode (or hit the keyboard shortcut), get your image in seconds.</p>
+            </div>
+            <div class="step">
+                <h3>Annotate</h3>
+                <p>Draw, redact, add callouts, drop step markers, blur sensitive bits. Undo/redo everything.</p>
+            </div>
+            <div class="step">
+                <h3>Crop &amp; polish</h3>
+                <p>Aspect ratio presets for social platforms. Style presets for consistent look across captures.</p>
+            </div>
+            <div class="step">
+                <h3>Export</h3>
+                <p>Download PNG/JPEG/PDF, copy to clipboard, share, or save to Drive. Your call, every time.</p>
+            </div>
+        </div>
     </div>
-    <div class="steps">
-      <div class="step">
-        <h3>Capture</h3>
-        <p>Pin the extension, pick a mode (or hit the keyboard shortcut), get your image in seconds.</p>
-      </div>
-      <div class="step">
-        <h3>Annotate</h3>
-        <p>Draw, redact, add callouts, drop step markers, blur sensitive bits. Undo/redo everything.</p>
-      </div>
-      <div class="step">
-        <h3>Crop &amp; polish</h3>
-        <p>Aspect ratio presets for social platforms. Style presets for consistent look across captures.</p>
-      </div>
-      <div class="step">
-        <h3>Export</h3>
-        <p>Download PNG/JPEG/PDF, copy to clipboard, share, or save to Drive. Your call, every time.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- ============================================================ Privacy -->
 <section id="privacy">
-  <div class="section-inner">
-    <div class="privacy-card">
-      <div>
-        <span class="section-eyebrow">Privacy pledge</span>
-        <h2>100% local by default</h2>
-        <p>No accounts. No sign-in. No analytics, no telemetry, no fingerprinting. Captures live in your browser, not on our servers — because we don't have any.</p>
-        <p>Optional sharing services (Slack, Google Drive) are off until you turn them on, and each is a separate toggle with a plain-English privacy note. Turn the master switch off and nothing reaches the network.</p>
-        <p style="margin-top:12px"><a href="./privacy.html" class="btn ghost" style="padding:8px 16px;font-size:13px">Read the full privacy policy →</a></p>
-      </div>
-      <div class="lock" aria-hidden="true">🔒</div>
+    <div class="section-inner">
+        <div class="privacy-card">
+            <div>
+                <span class="section-eyebrow">Privacy pledge</span>
+                <h2>100% local by default</h2>
+                <p>No accounts. No sign-in. No analytics, no telemetry, no fingerprinting. Captures live in your browser, not on our servers — because we don't have any.</p>
+                <p>Optional sharing services (Slack, Google Drive) are off until you turn them on, and each is a separate toggle with a plain-English privacy note. Turn the master switch off and nothing reaches the network.</p>
+                <p style="margin-top:12px"><a href="./privacy.html" class="btn ghost" style="padding:8px 16px;font-size:13px">Read the full privacy policy →</a></p>
+            </div>
+            <div class="lock" aria-hidden="true">🔒</div>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- ============================================================ FAQ -->
 <section id="faq" class="alt">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="section-eyebrow">Frequently asked</span>
-      <h2>Questions we hear</h2>
+    <div class="section-inner">
+        <div class="section-head">
+            <span class="section-eyebrow">Frequently asked</span>
+            <h2>Questions we hear</h2>
+        </div>
+        <div class="faq">
+            <details>
+                <summary>Is it really free?</summary>
+                <p>Yes. No paid tier, no ads, no upsells. It's built by one developer who wanted a better full-page screenshot tool and shipped it.</p>
+            </details>
+            <details>
+                <summary>Do you see my screenshots?</summary>
+                <p>No. There's no server on our side. Everything happens in your browser. Files leave your device only if you download them, copy them, or explicitly enable and click a sharing service (Google Drive uploads to <em>your</em> account, not ours).</p>
+            </details>
+            <details>
+                <summary>What's an "editable PNG"?</summary>
+                <p>Every PNG CaptureKit exports carries a compressed metadata chunk with your shapes and base image. It looks like a normal PNG to every other tool. But if you drop it back into CaptureKit later, the whole annotation session comes back editable — pen strokes, text, callouts, everything. JPEG and PDF exports are flat.</p>
+            </details>
+            <details>
+                <summary>How does the Google Drive integration work?</summary>
+                <p>It uses Chrome's built-in Google sign-in with the <code>drive.file</code> scope — the most restrictive Drive scope. CaptureKit can only see files it creates itself, never your other Drive contents. The scope, the sign-in, and the upload are all opt-in.</p>
+            </details>
+            <details>
+                <summary>Does full-page capture work on Jira, Notion, Gmail, Linear?</summary>
+                <p>Yes. Those apps don't scroll the whole browser window — the content lives inside an inner scroll container. CaptureKit detects that pattern automatically and drives the inner container instead, so <b>Full page</b> captures the whole ticket / doc / thread instead of just the first viewport. A quick prewarm pass loads any lazy images and embeds before stitching starts, so the finished image is one continuous shot with no duplicated rows.</p>
+            </details>
+            <details>
+                <summary>Which browsers are supported?</summary>
+                <p>Chrome, Firefox, and Chromium-based browsers (Edge, Brave, Opera). Install from the <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Firefox Add-ons</a>. Google Drive sharing is Chrome/Edge only — Firefox lacks the identity API that powers it; every other feature works identically on all three.</p>
+            </details>
+            <details>
+                <summary>Can I contribute or report a bug?</summary>
+                <p>Yes — email <a href="mailto:araza5193@gmail.com">araza5193@gmail.com</a> with the reproduction steps, extension version, and browser version.</p>
+            </details>
+        </div>
     </div>
-    <div class="faq">
-      <details>
-        <summary>Is it really free?</summary>
-        <p>Yes. No paid tier, no ads, no upsells. It's built by one developer who wanted a better full-page screenshot tool and shipped it.</p>
-      </details>
-      <details>
-        <summary>Do you see my screenshots?</summary>
-        <p>No. There's no server on our side. Everything happens in your browser. Files leave your device only if you download them, copy them, or explicitly enable and click a sharing service (Google Drive uploads to <em>your</em> account, not ours).</p>
-      </details>
-      <details>
-        <summary>What's an "editable PNG"?</summary>
-        <p>Every PNG CaptureKit exports carries a compressed metadata chunk with your shapes and base image. It looks like a normal PNG to every other tool. But if you drop it back into CaptureKit later, the whole annotation session comes back editable — pen strokes, text, callouts, everything. JPEG and PDF exports are flat.</p>
-      </details>
-      <details>
-        <summary>How does the Google Drive integration work?</summary>
-        <p>It uses Chrome's built-in Google sign-in with the <code>drive.file</code> scope — the most restrictive Drive scope. CaptureKit can only see files it creates itself, never your other Drive contents. The scope, the sign-in, and the upload are all opt-in.</p>
-      </details>
-      <details>
-        <summary>Which browsers are supported?</summary>
-        <p>Chrome and Chromium-based browsers (Edge, Brave, Opera) via the Chrome Web Store. Firefox port is on the v1.7 roadmap.</p>
-      </details>
-      <details>
-        <summary>Can I contribute or report a bug?</summary>
-        <p>Yes — email <a href="mailto:araza5193@gmail.com">araza5193@gmail.com</a> with the reproduction steps, extension version, and browser version.</p>
-      </details>
-    </div>
-  </div>
 </section>
 
 <!-- ============================================================ Final CTA -->
 <section class="final-cta">
-  <h2>Ready to ship better screenshots?</h2>
-  <p>Free, no account, works in seconds.</p>
-  <a class="btn primary" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Add to Chrome — it's free</a>
+    <h2>Ready to ship better screenshots?</h2>
+    <p>Free, no account, works in seconds.</p>
+    <div class="cta">
+        <a class="btn primary" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Add to Chrome — it's free</a>
+        <a class="btn primary" href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Add to Firefox — it's free</a>
+    </div>
 </section>
 
 <footer>
-  <div class="footer-inner">
-    <span>&copy; 2026 CaptureKit. Built by <a href="mailto:araza5193@gmail.com">Ali Raza Arshad</a>.</span>
-    <div class="footer-links">
-      <a href="./privacy.html">Privacy</a>
-      <a href="mailto:araza5193@gmail.com">Support</a>
-      <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a>
+    <div class="footer-inner">
+        <span>&copy; 2026 CaptureKit. Built by <a href="mailto:araza5193@gmail.com">Ali Raza Arshad</a>.</span>
+        <div class="footer-links">
+            <a href="./privacy.html">Privacy</a>
+            <a href="mailto:araza5193@gmail.com">Support</a>
+            <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a>
+            <a href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Firefox Add-ons</a>
+        </div>
     </div>
-  </div>
 </footer>
 
 <script>
-  // Screenshot tab switcher — swap the active .shot-tab and the active <img>,
-  // update the caption below. Nothing fancy; native details for FAQ handles
-  // the accordion, sticky nav handles itself, smooth scroll is CSS.
-  (function () {
-    const tabs = document.querySelectorAll('.shot-tab');
-    const imgs = document.querySelectorAll('#shotFrame img');
-    const cap  = document.getElementById('shotCaption');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const which = tab.dataset.shot;
-        tabs.forEach(t => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
-        imgs.forEach(img => img.classList.toggle('active', img.dataset.shot === which));
-        if (cap && tab.dataset.caption) cap.textContent = tab.dataset.caption;
-      });
-    });
+    // Screenshot tab switcher — swap the active .shot-tab and the active <img>,
+    // update the caption below. Nothing fancy; native details for FAQ handles
+    // the accordion, sticky nav handles itself, smooth scroll is CSS.
+    (function () {
+        const tabs = document.querySelectorAll('.shot-tab');
+        const imgs = document.querySelectorAll('#shotFrame img');
+        const cap  = document.getElementById('shotCaption');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const which = tab.dataset.shot;
+                tabs.forEach(t => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
+                imgs.forEach(img => img.classList.toggle('active', img.dataset.shot === which));
+                if (cap && tab.dataset.caption) cap.textContent = tab.dataset.caption;
+            });
+        });
 
-    // Auto-advance the screenshot tour every ~5s until the user interacts with a tab.
-    let idx = 0, timer = setInterval(next, 5000), stopped = false;
-    function next() {
-      idx = (idx + 1) % tabs.length;
-      tabs[idx].click();
-    }
-    function stop() { if (stopped) return; stopped = true; clearInterval(timer); }
-    tabs.forEach(t => t.addEventListener('click', stop, { once: true }));
-  })();
+        // Auto-advance the screenshot tour every ~5s until the user interacts with a tab.
+        let idx = 0, timer = setInterval(next, 5000), stopped = false;
+        function next() {
+            idx = (idx + 1) % tabs.length;
+            tabs[idx].click();
+        }
+        function stop() { if (stopped) return; stopped = true; clearInterval(timer); }
+        tabs.forEach(t => t.addEventListener('click', stop, { once: true }));
+    })();
 </script>
 
 </body>
