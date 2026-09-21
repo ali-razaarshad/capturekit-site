@@ -256,16 +256,19 @@
 <!-- ============================================================ Hero -->
 <section class="hero">
     <div class="hero-inner">
-        <span class="badge-pill"><span class="dot"></span> Version 1.6 · Free · No account required</span>
+        <span class="badge-pill"><span class="dot"></span> Version 1.7 · Free · No account required</span>
         <h1>Screenshots that <span class="grad">stay editable.</span></h1>
         <p class="lede">
             Capture entire web pages — full page, scroll, region, or element picker — then annotate
-            with pro tools and export as PNG, JPEG, or PDF. Every PNG comes back editable when you
+            with pro tools and export as PNG, JPEG, PDF, or vector SVG. Every PNG comes back editable when you
             drop it in again.
         </p>
         <div class="cta">
             <a class="btn primary" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">
                 Add to Chrome — Free
+            </a>
+            <a class="btn primary" href="https://microsoftedge.microsoft.com/addons/detail/npagjmpnhehcaniaegcgihcdpbakmpkg" target="_blank" rel="noopener">
+                Add to Edge — Free
             </a>
             <a class="btn primary" href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">
                 Add to Firefox — Free
@@ -284,12 +287,14 @@
         <div class="section-head">
             <span class="section-eyebrow">Take a look</span>
             <h2>See it in action</h2>
-            <p class="section-lead">Seven screens from the real extension. Click through to see capture, annotate, options, privacy, element picker, history, and scrolling capture.</p>
+            <p class="section-lead">Nine screens from the extension. Click through to see capture, annotate, Smart Redact, Smart Caption, options, privacy, element picker, history, and scrolling capture.</p>
         </div>
 
         <div class="shot-tabs" role="tablist" id="shotTabs">
             <button class="shot-tab" role="tab" aria-selected="true"  data-shot="capture"  data-caption="Popup: pick a capture mode (full page, scroll, visible, region, element, scroll area).">Capture modes</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="annotate" data-caption="Editor: pen, arrow, shapes, callouts, text, blur, redact, spotlight, step markers, stamps.">Annotate</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="redact"   data-caption="Smart Redact (new in 1.7): finds emails, phone numbers, cards, IPs, IBANs, and faces on your device. Accept or skip each one, or accept them all.">Smart Redact</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="caption"  data-caption="Smart Caption and ✨ Improve (new in 1.7): a one-line description for alt text or the filename, and one-click rewrites of your annotation text. Uses Chrome's built-in on-device AI.">Smart Caption</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="options"  data-caption="Settings: theme, toolbar position, defaults, filename template, history, sharing.">Options</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="privacy"  data-caption="Save panel: local-only download / copy / print. No server round-trip.">Save &amp; privacy</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="element"  data-caption="Element picker: hover any element, ↑/↓ widens or narrows, click to capture just that box.">Element picker</button>
@@ -300,6 +305,8 @@
         <div class="shot-frame" id="shotFrame">
             <img class="active" data-shot="capture"  src="./screenshots/capturekit-01-capture.png"       alt="Capture modes popup" />
             <img            data-shot="annotate" src="./screenshots/capturekit-02-annotate.png"      alt="Annotation editor" />
+            <img            data-shot="redact"   src="./screenshots/capturekit-08-smart-redact.png"  alt="Smart Redact reviewing proposed redactions over a customer record" />
+            <img            data-shot="caption"  src="./screenshots/capturekit-09-caption.png"       alt="Smart Caption dialog and the Improve menu on an annotation" />
             <img            data-shot="options"  src="./screenshots/capturekit-03-options.png"       alt="Settings page" />
             <img            data-shot="privacy"  src="./screenshots/capturekit-04-save-privacy.png"  alt="Save panel with privacy note" />
             <img            data-shot="element"  src="./screenshots/capturekit-05-element.png"       alt="Element picker in action" />
@@ -347,8 +354,33 @@
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">🔁</div>
-                <h3>Editable PNGs <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(79,70,229,.12);color:var(--accent);border:none">New in 1.6</span></h3>
+                <h3>Editable PNGs</h3>
                 <p>Every PNG carries your shapes as compressed metadata. Drop it back in later and every shape is editable again.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">✨</div>
+                <h3>Smart Redact <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7 · On-device</span></h3>
+                <p>One click proposes redact / pixelate boxes over emails, phone numbers, credit cards, IPs, IBANs, and faces. You review each proposal before it commits. Runs entirely on your device — no uploads.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🔢</div>
+                <h3>Auto-number <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <p>Pick the step tool, choose All buttons or All links, and numbered step markers are proposed in reading order. Review them, accept, then drag to adjust. One undo removes the whole batch.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">📐</div>
+                <h3>Vector SVG export <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <p>Download as SVG and every annotation stays a real vector object — editable text, arrows, shapes, and callouts in Inkscape, Illustrator, or Figma — over one image layer of your capture.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🧩</div>
+                <h3>Shape templates <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <p>Save a watermark, a corner badge, or a set of step markers once. Add it to any capture with one click, and it lands in the same corner even when the screenshot is a different size.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">⌨️</div>
+                <h3>Faster editing <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <p>Press 1–9 to switch tools and hold Space to pan. Shapes snap to each other's centers and to the screenshot's edges. Text can have superscripts and subscripts, and the eyedropper picks up a shape's exact color.</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">📤</div>
@@ -358,7 +390,7 @@
             <div class="feature">
                 <div class="icon" aria-hidden="true">💬</div>
                 <h3>Slack &amp; Drive (opt-in)</h3>
-                <p>Copy Slack-ready markdown or save to your own Google Drive. Off by default; each service is a separate toggle.</p>
+                <p>Copy Slack-ready markdown or save to your own Google Drive. Off by default; each service is a separate toggle. Settings lets you connect and test Drive (on Edge, a short guided setup with your own Google client).</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">⚡</div>
@@ -391,7 +423,7 @@
             </div>
             <div class="step">
                 <h3>Export</h3>
-                <p>Download PNG/JPEG/PDF, copy to clipboard, share, or save to Drive. Your call, every time.</p>
+                <p>Download PNG/JPEG/PDF/SVG, copy to clipboard, share, or save to Drive. Your call, every time.</p>
             </div>
         </div>
     </div>
@@ -431,7 +463,15 @@
             </details>
             <details>
                 <summary>What's an "editable PNG"?</summary>
-                <p>Every PNG CaptureKit exports carries a compressed metadata chunk with your shapes and base image. It looks like a normal PNG to every other tool. But if you drop it back into CaptureKit later, the whole annotation session comes back editable — pen strokes, text, callouts, everything. JPEG and PDF exports are flat.</p>
+                <p>Every PNG CaptureKit exports carries a compressed metadata chunk with your shapes and base image. It looks like a normal PNG to every other tool. But if you drop it back into CaptureKit later, the whole annotation session comes back editable — pen strokes, text, callouts, everything. JPEG, PDF, and SVG exports can't be reopened in CaptureKit (SVG keeps shapes editable in vector apps instead).</p>
+            </details>
+            <details>
+                <summary>Does Smart Redact upload my screenshots?</summary>
+                <p>No — Smart Redact runs entirely on your device. The OCR model (Tesseract WASM + English trained data, ~8 MB) and the face detector (face-api.js SSD MobileNet v1, ~5.6 MB) are both bundled inside the extension and loaded from your local install the first time you click <b>Smart Redact</b>. Nothing is sent to any server, no results are stored beyond the shapes you choose to accept, and the whole feature is off until you turn it on in <b>Settings → AI features</b>. For fastest performance, keep Chrome's hardware acceleration on (<code>chrome://settings/system</code>) — face detection runs 10–30× faster on GPU than on CPU.</p>
+            </details>
+            <details>
+                <summary>What is Smart Caption and where does the AI actually run?</summary>
+                <p>Smart Caption adds a <b>Caption</b> button to the editor that generates a one-sentence description of your capture (useful as alt text or a filename) plus a <b>✨ Improve</b> button that rewrites annotation text with a shorter, clearer, or more formal tone. It uses <b>Chrome's built-in on-device AI</b> (Gemini Nano) — a browser-managed model that runs locally on your machine. No image, text, or output ever leaves your device; there is no network call. Both features stay hidden unless the API is available in your browser and you enable them in <b>Settings → AI features → Smart Caption</b>. Requires Chrome 128+ with the built-in AI enabled — Firefox, Safari, and older Chrome simply don't show the buttons.</p>
             </details>
             <details>
                 <summary>How does the Google Drive integration work?</summary>
@@ -443,7 +483,7 @@
             </details>
             <details>
                 <summary>Which browsers are supported?</summary>
-                <p>Chrome, Firefox, and Chromium-based browsers (Edge, Brave, Opera). Install from the <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Firefox Add-ons</a>. Google Drive sharing is Chrome/Edge only — Firefox lacks the identity API that powers it; every other feature works identically on all three.</p>
+                <p>Chrome, Edge, Firefox, and other Chromium-based browsers (Brave, Opera). Install from the <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a>, the <a href="https://microsoftedge.microsoft.com/addons/detail/npagjmpnhehcaniaegcgihcdpbakmpkg" target="_blank" rel="noopener">Microsoft Edge Add-ons</a> store, or <a href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Firefox Add-ons</a>. Google Drive sharing is Chrome/Edge only — Firefox lacks the identity API that powers it; every other feature works identically on all three.</p>
             </details>
             <details>
                 <summary>Can I contribute or report a bug?</summary>
@@ -459,6 +499,7 @@
     <p>Free, no account, works in seconds.</p>
     <div class="cta">
         <a class="btn primary" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Add to Chrome — it's free</a>
+        <a class="btn primary" href="https://microsoftedge.microsoft.com/addons/detail/npagjmpnhehcaniaegcgihcdpbakmpkg" target="_blank" rel="noopener">Add to Edge — it's free</a>
         <a class="btn primary" href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Add to Firefox — it's free</a>
     </div>
 </section>
@@ -470,6 +511,7 @@
             <a href="./privacy.html">Privacy</a>
             <a href="mailto:araza5193@gmail.com">Support</a>
             <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a>
+            <a href="https://microsoftedge.microsoft.com/addons/detail/npagjmpnhehcaniaegcgihcdpbakmpkg" target="_blank" rel="noopener">Edge Add-ons</a>
             <a href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Firefox Add-ons</a>
         </div>
     </div>
@@ -499,7 +541,9 @@
             tabs[idx].click();
         }
         function stop() { if (stopped) return; stopped = true; clearInterval(timer); }
-        tabs.forEach(t => t.addEventListener('click', stop, { once: true }));
+        // Only a real user click stops the tour — next() advances via .click()
+        // too, and counting that as "interaction" stopped the tour after one step.
+        tabs.forEach(t => t.addEventListener('click', (e) => { if (e.isTrusted) stop(); }));
     })();
 </script>
 
