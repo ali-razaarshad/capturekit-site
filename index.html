@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="google-site-verification" content="U3epPt-Chwufzj_GuScj_Ecf_4swGxDBR84gJS-QU8w" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="CaptureKit — full-page screenshots, annotation, and export for Chrome, Firefox, and Edge. 100% local by default. Callouts, redact, spotlight, PDF/PNG/JPEG, editable PNGs." />
+    <meta name="description" content="CaptureKit — full-page screenshots, screen and tab recording to WebM/GIF, annotation, and export for Chrome, Firefox, and Edge. Local by default; cloud AI only if you add your own key. Callouts, redact, spotlight, PDF/PNG/JPEG, editable PNGs." />
     <meta property="og:title" content="CaptureKit — Full Page Screenshot & Annotate" />
-    <meta property="og:description" content="Capture entire web pages, annotate with pro tools, export as editable PNG. 100% local by default." />
+    <meta property="og:description" content="Capture entire web pages, annotate with pro tools, export as editable PNG. Local by default; cloud AI only if you add your own key." />
     <meta property="og:image" content="./hero.png" />
     <title>CaptureKit — Full Page Screenshot & Annotate for Chrome, Firefox &amp; Edge</title>
     <link rel="icon" type="image/png" href="./favicon.png" />
@@ -77,6 +77,13 @@
             padding: 6px 14px; border-radius: 999px;
             background: var(--panel); border: 1px solid var(--border);
             font-size: 13px; font-weight: 600; color: var(--fg-soft);
+        }
+        /* "New in X" pills: one class, one colour. These were inline styles and had
+           drifted to a second colour for the previous release. */
+        .badge-new {
+            display: inline-block; font-size: 10px; font-weight: 700; line-height: 1.7;
+            padding: 2px 8px; border-radius: 999px; vertical-align: middle;
+            background: rgba(124,58,237,.14); color: #7c3aed; border: none;
         }
         .badge-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
         h1 {
@@ -256,12 +263,16 @@
 <!-- ============================================================ Hero -->
 <section class="hero">
     <div class="hero-inner">
-        <span class="badge-pill"><span class="dot"></span> Version 1.7 · Free · No account required</span>
+        <span class="badge-pill"><span class="dot"></span> Version 1.8 · Free · No account required</span>
         <h1>Screenshots that <span class="grad">stay editable.</span></h1>
         <p class="lede">
             Capture entire web pages — full page, scroll, region, or element picker — then annotate
             with pro tools and export as PNG, JPEG, PDF, or vector SVG. Every PNG comes back editable when you
             drop it in again.
+        </p>
+        <p class="lede" style="font-size:15px;margin-top:-6px">
+            <b>New in 1.8:</b> record a tab, window or screen and save it as a video or GIF, one-click Smart crop, an object blur brush
+            that follows what you paint, Ask questions about a capture, OCR in 19 more languages, alt text inside your PNGs, and settings sync across your browsers.
         </p>
         <div class="cta">
             <a class="btn primary" href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">
@@ -291,11 +302,14 @@
         </div>
 
         <div class="shot-tabs" role="tablist" id="shotTabs">
-            <button class="shot-tab" role="tab" aria-selected="true"  data-shot="capture"  data-caption="Popup: pick a capture mode (full page, scroll, visible, region, element, scroll area).">Capture modes</button>
+            <button class="shot-tab" role="tab" aria-selected="true"  data-shot="capture"  data-caption="Popup: pick a capture mode — full page, scroll, visible, region, element or scroll area, plus a whole desktop or window, or a video recording.">Capture modes</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="record"   data-caption="Record video &amp; GIFs: a draggable Pause/Stop bar while you record, then trim, add timed annotations, and export MP4, WebM or an animated GIF — all on your device.">Record video</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="desktop"  data-caption="Desktop &amp; window screenshots: your browser's own sharing prompt asks what to capture, so no extra permission is needed. The shot opens in the normal editor.">Desktop capture</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="annotate" data-caption="Editor: pen, arrow, shapes, callouts, text, blur, redact, spotlight, step markers, stamps.">Annotate</button>
-            <button class="shot-tab" role="tab" aria-selected="false" data-shot="redact"   data-caption="Smart Redact (new in 1.7): finds emails, phone numbers, cards, IPs, IBANs, and faces on your device. Accept or skip each one, or accept them all.">Smart Redact</button>
-            <button class="shot-tab" role="tab" aria-selected="false" data-shot="caption"  data-caption="Smart Caption and ✨ Improve (new in 1.7): a one-line description for alt text or the filename, and one-click rewrites of your annotation text. Uses Chrome's built-in on-device AI.">Smart Caption</button>
-            <button class="shot-tab" role="tab" aria-selected="false" data-shot="options"  data-caption="Settings: theme, toolbar position, defaults, filename template, history, sharing.">Options</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="tools"    data-caption="Smart crop trims blank and solid-colour margins in one click. The object blur brush follows an avatar or address outline instead of a rectangle. Both run on your device, with no model to download.">Smart crop &amp; blur</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="redact"   data-caption="Smart Redact: finds emails, phone numbers, cards, IPs, IBANs, and faces on your device. Accept or skip each one, or accept them all.">Smart Redact</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="caption"  data-caption="Smart Caption and ✨ Improve: a one-line description for alt text or the filename, and one-click rewrites of your annotation text. New in 1.8: Ask… to chat about the capture. Uses Chrome's built-in on-device AI.">Smart Caption</button>
+            <button class="shot-tab" role="tab" aria-selected="false" data-shot="options"  data-caption="Settings: theme, toolbar position, defaults, filename template, recording, history — plus Sync, AI features and sharing services, every one off by default.">Options</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="privacy"  data-caption="Save panel: local-only download / copy / print. No server round-trip.">Save &amp; privacy</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="element"  data-caption="Element picker: hover any element, ↑/↓ widens or narrows, click to capture just that box.">Element picker</button>
             <button class="shot-tab" role="tab" aria-selected="false" data-shot="history"  data-caption="Recent captures gallery — multi-select, delete, save files, search. History cap is configurable.">History gallery</button>
@@ -303,8 +317,11 @@
         </div>
 
         <div class="shot-frame" id="shotFrame">
-            <img class="active" data-shot="capture"  src="./screenshots/capturekit-01-capture.png"       alt="Capture modes popup" />
-            <img            data-shot="annotate" src="./screenshots/capturekit-02-annotate.png"      alt="Annotation editor" />
+            <img class="active" data-shot="capture"  src="./screenshots/capturekit-01-capture.png"       alt="Capture modes popup with full page, scroll, visible, region, element, scroll area, desktop and record video" />
+            <img            data-shot="record"   src="./screenshots/capturekit-10-record.png"        alt="Recording player with a live Pause and Stop bar, a trim bar, timed annotations and MP4, WebM and GIF export" />
+            <img            data-shot="desktop"  src="./screenshots/capturekit-12-desktop.png"       alt="The browser's own sharing prompt choosing a window, and the captured window open in the CaptureKit editor" />
+            <img            data-shot="annotate" src="./screenshots/capturekit-02-annotate.png"      alt="Annotation editor with the top toolbar, an arrow, numbered steps, a redaction bar and highlighter strokes" />
+            <img            data-shot="tools"    src="./screenshots/capturekit-11-editor.png"        alt="Smart crop fitting the crop box to the content, and the object blur brush following an avatar's outline" />
             <img            data-shot="redact"   src="./screenshots/capturekit-08-smart-redact.png"  alt="Smart Redact reviewing proposed redactions over a customer record" />
             <img            data-shot="caption"  src="./screenshots/capturekit-09-caption.png"       alt="Smart Caption dialog and the Improve menu on an annotation" />
             <img            data-shot="options"  src="./screenshots/capturekit-03-options.png"       alt="Settings page" />
@@ -353,33 +370,78 @@
                 <p>Free, 1:1, 4:3, 16:9, 9:16, Twitter card, OG card, LinkedIn — enforced to the pixel on export.</p>
             </div>
             <div class="feature">
+                <div class="icon" aria-hidden="true">🎬</div>
+                <h3>Record video &amp; GIFs <span class="badge-new">New in 1.8</span></h3>
+                <p>Record the tab you're on, or pick any tab, window or your whole screen. Keep the sound and your mic, pause and stop from a floating bar you can drag anywhere, then trim the clip and save it as <b>MP4</b>, WebM or an animated GIF — or send any frame to the editor. All on your device.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🖥️</div>
+                <h3>Desktop &amp; window shots <span class="badge-new">New in 1.8</span></h3>
+                <p>Capture anything on your computer, not just a browser tab: another app’s window, a second tab, or a whole screen. It opens in the same editor with the same tools, and it needs no extra permission — your browser’s own picker is the consent step.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">✍️</div>
+                <h3>Annotate the video <span class="badge-new">New in 1.8</span></h3>
+                <p>The same arrows, boxes, text, step numbers, blur and spotlight you use on screenshots — now on a recording, and each one can appear only for the seconds it matters. Blur and pixelate follow the frame underneath, so they keep covering something that moves. Everything is baked into the WebM, the GIF and any frame you save.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🫥</div>
+                <h3>Object blur brush <span class="badge-new">New in 1.8</span></h3>
+                <p>Paint over an avatar, logo or email and the blur follows that object's outline, not a rectangle. Faces get a face-shaped blur, all on-device.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🪄</div>
+                <h3>Smart crop <span class="badge-new">New in 1.8</span></h3>
+                <p>One click fits the crop box to your content, trimming blank or solid-color margins. Press Enter to accept.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">💬</div>
+                <h3>Ask about a capture <span class="badge-new">New in 1.8</span></h3>
+                <p>"What does this screenshot show?" "Any errors?" Chat about a capture with your browser's built-in on-device AI. Nothing is uploaded.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🌐</div>
+                <h3>19 more OCR languages <span class="badge-new">New in 1.8</span></h3>
+                <p>Smart Redact reads German, French, Spanish, Russian, Arabic, Hindi, Chinese, Japanese, Korean and more. Download only the languages you need.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🎓</div>
+                <h3>Teach Smart Redact <span class="badge-new">New in 1.8</span></h3>
+                <p>It knows emails, cards and faces. Teach it your employee-ID format, project codenames or internal hostnames — as keywords or patterns — plus a "never flag this" list. Skip the same kind three times and it offers to stop suggesting it. Rules export as a JSON file your team can share, and never leave your device.</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">☁️</div>
+                <h3>Cloud AI, your own key <span class="badge-new">New in 1.8</span></h3>
+                <p>No built-in AI in your browser? Add your own Anthropic, OpenAI or Gemini API key and Caption, ✨ Improve and Ask… work anywhere. Off until you add a key — and Smart Redact never uses it.</p>
+            </div>
+            <div class="feature">
                 <div class="icon" aria-hidden="true">🔁</div>
                 <h3>Editable PNGs</h3>
-                <p>Every PNG carries your shapes as compressed metadata. Drop it back in later and every shape is editable again.</p>
+                <p>Every PNG carries your shapes as compressed metadata. Drop it back in later and every shape is editable again. <b>New in 1.8:</b> it can also carry your Smart Caption as standard alt text (PNG Description + XMP) for tools that read it.</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">✨</div>
-                <h3>Smart Redact <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7 · On-device</span></h3>
-                <p>One click proposes redact / pixelate boxes over emails, phone numbers, credit cards, IPs, IBANs, and faces. You review each proposal before it commits. Runs entirely on your device — no uploads.</p>
+                <h3>Smart Redact</h3>
+                <p>One click proposes redact / pixelate boxes over emails, phone numbers, credit cards, IPs, IBANs, and faces. You review each proposal before it commits. Runs entirely on your device — no uploads. Reads English out of the box; <b>new in 1.8:</b> add German, French, Japanese and 16 more languages with one click each in Settings.</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">🔢</div>
-                <h3>Auto-number <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <h3>Auto-number</h3>
                 <p>Pick the step tool, choose All buttons or All links, and numbered step markers are proposed in reading order. Review them, accept, then drag to adjust. One undo removes the whole batch.</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">📐</div>
-                <h3>Vector SVG export <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <h3>Vector SVG export</h3>
                 <p>Download as SVG and every annotation stays a real vector object — editable text, arrows, shapes, and callouts in Inkscape, Illustrator, or Figma — over one image layer of your capture.</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">🧩</div>
-                <h3>Shape templates <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <h3>Shape templates</h3>
                 <p>Save a watermark, a corner badge, or a set of step markers once. Add it to any capture with one click, and it lands in the same corner even when the screenshot is a different size.</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">⌨️</div>
-                <h3>Faster editing <span class="badge-pill" style="font-size:10px;padding:2px 8px;background:rgba(6,182,212,.14);color:#0891b2;border:none">New in 1.7</span></h3>
+                <h3>Faster editing</h3>
                 <p>Press 1–9 to switch tools and hold Space to pan. Shapes snap to each other's centers and to the screenshot's edges. Text can have superscripts and subscripts, and the eyedropper picks up a shape's exact color.</p>
             </div>
             <div class="feature">
@@ -391,6 +453,11 @@
                 <div class="icon" aria-hidden="true">💬</div>
                 <h3>Slack &amp; Drive (opt-in)</h3>
                 <p>Copy Slack-ready markdown or save to your own Google Drive. Off by default; each service is a separate toggle. Settings lets you connect and test Drive (on Edge, a short guided setup with your own Google client).</p>
+            </div>
+            <div class="feature">
+                <div class="icon" aria-hidden="true">🔄</div>
+                <h3>Sync &amp; team folders <span class="badge-new">New in 1.8</span></h3>
+                <p>Carry your preferences, style presets and shape templates to every browser you sign into — on <b>your browser's own sync</b>, the one already carrying your bookmarks. No CaptureKit account, no server of ours. Uploading to Google Drive? Name a folder and every capture lands in it; share that folder and your team sees them all. Both off by default; API keys and captures never sync.</p>
             </div>
             <div class="feature">
                 <div class="icon" aria-hidden="true">⚡</div>
@@ -419,7 +486,7 @@
             </div>
             <div class="step">
                 <h3>Crop &amp; polish</h3>
-                <p>Aspect ratio presets for social platforms. Style presets for consistent look across captures.</p>
+                <p>Smart crop trims dead margins in one click. Aspect ratio presets for social platforms. Style presets for consistent look across captures.</p>
             </div>
             <div class="step">
                 <h3>Export</h3>
@@ -438,6 +505,7 @@
                 <h2>100% local by default</h2>
                 <p>No accounts. No sign-in. No analytics, no telemetry, no fingerprinting. Captures live in your browser, not on our servers — because we don't have any.</p>
                 <p>Optional sharing services (Slack, Google Drive) are off until you turn them on, and each is a separate toggle with a plain-English privacy note. Turn the master switch off and nothing reaches the network.</p>
+                <p><b>Cloud AI (new in 1.8) is the one feature that sends a capture anywhere</b>, and only if you switch it on and paste your own API key for Anthropic, OpenAI or Gemini. It talks to them directly — we have no server in between and never see your key or your captures. The editor tells you before the first upload, and Smart Redact never uses it.</p>
                 <p style="margin-top:12px"><a href="./privacy.html" class="btn ghost" style="padding:8px 16px;font-size:13px">Read the full privacy policy →</a></p>
             </div>
             <div class="lock" aria-hidden="true">🔒</div>
@@ -470,8 +538,44 @@
                 <p>No — Smart Redact runs entirely on your device. The OCR model (Tesseract WASM + English trained data, ~8 MB) and the face detector (face-api.js SSD MobileNet v1, ~5.6 MB) are both bundled inside the extension and loaded from your local install the first time you click <b>Smart Redact</b>. Nothing is sent to any server, no results are stored beyond the shapes you choose to accept, and the whole feature is off until you turn it on in <b>Settings → AI features</b>. For fastest performance, keep Chrome's hardware acceleration on (<code>chrome://settings/system</code>) — face detection runs 10–30× faster on GPU than on CPU.</p>
             </details>
             <details>
+                <summary>Can I teach it to find my company's own sensitive data?</summary>
+                <p>Yes, from 1.8. In <b>Settings → AI features → Smart Redact</b> you can add your own rules — a keyword like <code>ACME-</code>, or a pattern like <code>ACME-\d{4}</code> — each with a label that shows on the review chip. You can also list values that should <b>never</b> be flagged, and switch off any built-in detector that is always wrong for your screenshots. Skip the same kind of proposal three times and the editor offers to stop suggesting it. Rules export to a small JSON file, so a team can share one set without an account or a server, and they stay on your computer: a list of what you consider secret is sensitive in itself.</p>
+            </details>
+            <details>
+                <summary>Does anything ever leave my device?</summary>
+                <p>Only if you ask for it, and the list is short. <b>Sharing services</b> (Slack, Google Drive, Imgur) upload a capture when you click their button, and each is off until you enable it. <b>Extra OCR languages</b> download a language file from a public CDN when you click Download — that request carries nothing about you. <b>Cloud AI</b> (new in 1.8) uploads the capture you are working on to Anthropic, OpenAI or Google Gemini, using an API key you supply; it is off until you switch it on and paste a key, your browser asks permission before the first request, and the editor names the provider before the first upload. Everything else — capturing, editing, recording, exporting, Smart Redact, history — happens on your computer, and there is no CaptureKit server for it to reach.</p>
+            </details>
+            <details>
+                <summary>Can I share settings — or captures — with my team?</summary>
+                <p>Two ways, both new in 1.8 and both off by default. <b>Sync</b> (Settings → Sync) carries your preferences, style presets and shape templates between the browsers you are signed into, using the browser's own sync — your Google, Microsoft or Mozilla account — so there is still no CaptureKit account and no server of ours. Your API keys, captures, recordings and history never sync, and your Smart Redact rules only do if you switch that on separately. For captures, name a folder under <b>Google Drive</b> and every upload goes into it; share that one folder from Drive and your team sees everything you put there, with Drive's own permissions. CaptureKit asks Google for the narrow <code>drive.file</code> scope, so it can only ever touch the files and folders it created — which is also why each person uploads to their own folder rather than into a teammate's.</p>
+            </details>
+            <details>
+                <summary>Can it record video?</summary>
+                <p>Yes, from 1.8. Pick <b>Record video</b> in the popup, then choose what to record: <b>This tab</b> starts on the page you're on straight away, or <b>Choose…</b> hands over to your browser's own sharing prompt, where you can pick another tab, a window or your whole screen. Keep the sound and your microphone if you want them, then trim the clip and download a WebM video or an animated GIF. Firefox always asks through its own prompt. Recording, trimming and GIF conversion all run in your browser, and recordings stay in the extension's storage on your device until you delete them. Recording stops by itself after 2 minutes by default (up to 10 in Settings).</p>
+            </details>
+            <details>
+                <summary>Can it screenshot something outside the browser?</summary>
+                <p>Yes, from 1.8. Pick <b>Desktop</b> in the popup and your browser asks what to capture — another tab, an app window, or a whole screen. CaptureKit takes a single frame and opens it in the normal editor. It needs <b>no new permission</b>: the browser’s own picker is the consent step, and it appears every time, so nothing can be captured without you choosing it first. Your countdown setting applies, giving you a few seconds to bring the right window forward.</p>
+            </details>
+            <details>
+                <summary>Does it give me time to get ready before recording?</summary>
+                <p>Yes. A <b>3, 2, 1</b> countdown runs before recording starts, so you can switch to the window or screen you actually want. Nothing is captured during it, so the countdown never appears in the video, and <b>Esc</b> cancels. When you record a window or your whole screen the count also shows in the floating controls, which stay above every other window — so you can watch it while you move. Set it to Off, 3, 5 or 10 seconds in Settings.</p>
+            </details>
+            <details>
+                <summary>Can I save a recording as MP4?</summary>
+                <p>Yes. The player offers <b>WebM</b>, <b>MP4</b> and <b>GIF</b>. MP4 is H.264 video with AAC sound — the combination PowerPoint, Keynote, Premiere, phones and Windows Photos all accept, where a WebM often bounces. The conversion happens entirely in your browser, frame by frame, with no upload and no ffmpeg to install; it just takes a little longer than WebM, which is the recording's native format. Any trim and any annotations are baked in. MP4 needs an H.264 encoder, so it is available in Chrome and Edge; Firefox keeps WebM and GIF.</p>
+            </details>
+            <details>
+                <summary>Can I draw on a recording?</summary>
+                <p>Yes. The player has its own toolbar: arrows, boxes, pen, marker, text, numbered steps, blur, pixelate, redact and spotlight — the same kit the screenshot editor gives you. Each annotation shows for the whole clip by default, or you can set it to appear only between two moments, so a label turns up exactly when it is needed. Blur and pixelate read the frame that is playing, so a box over something that moves keeps covering it. Everything is painted into the WebM, the GIF and any frame you save, and it all happens on your device.</p>
+            </details>
+            <details>
+                <summary>Does CaptureKit ever download anything?</summary>
+                <p>Only if you ask it to. The OCR that powers Smart Redact reads English out of the box. In 1.8 you can add other languages in <b>Settings → AI features → More OCR languages</b>. Each one is a 1–3 MB language file fetched from the jsDelivr CDN <em>only when you click its Download button</em>, checked against a fingerprint built into the extension, and stored in your browser. The request carries nothing about you or your screenshots, and text recognition still runs on your device. <b>Remove</b> deletes a language again. Everything else CaptureKit needs is inside the extension.</p>
+            </details>
+            <details>
                 <summary>What is Smart Caption and where does the AI actually run?</summary>
-                <p>Smart Caption adds a <b>Caption</b> button to the editor that generates a one-sentence description of your capture (useful as alt text or a filename) plus a <b>✨ Improve</b> button that rewrites annotation text with a shorter, clearer, or more formal tone. It uses <b>Chrome's built-in on-device AI</b> (Gemini Nano) — a browser-managed model that runs locally on your machine. No image, text, or output ever leaves your device; there is no network call. Both features stay hidden unless the API is available in your browser and you enable them in <b>Settings → AI features → Smart Caption</b>. Requires Chrome 128+ with the built-in AI enabled — Firefox, Safari, and older Chrome simply don't show the buttons.</p>
+                <p>Smart Caption adds a <b>Caption</b> button to the editor that generates a one-sentence description of your capture (useful as alt text or a filename) plus a <b>✨ Improve</b> button that rewrites annotation text with a shorter, clearer, or more formal tone, and <b>Ask…</b> (new in 1.8), a small chat where you can ask questions about the capture ("What does this screenshot show?", "Any errors?"). It uses <b>Chrome's built-in on-device AI</b> (Gemini Nano) — a browser-managed model that runs locally on your machine. No image, text, question, or answer ever leaves your device; there is no network call. These features stay hidden unless the API is available in your browser and you enable them in <b>Settings → AI features → Smart Caption</b>. Requires Chrome 128+ with the built-in AI enabled — Firefox, Safari, and older Chrome simply don't show the buttons.</p>
             </details>
             <details>
                 <summary>How does the Google Drive integration work?</summary>
@@ -483,7 +587,7 @@
             </details>
             <details>
                 <summary>Which browsers are supported?</summary>
-                <p>Chrome, Edge, Firefox, and other Chromium-based browsers (Brave, Opera). Install from the <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a>, the <a href="https://microsoftedge.microsoft.com/addons/detail/npagjmpnhehcaniaegcgihcdpbakmpkg" target="_blank" rel="noopener">Microsoft Edge Add-ons</a> store, or <a href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Firefox Add-ons</a>. Google Drive sharing is Chrome/Edge only — Firefox lacks the identity API that powers it; every other feature works identically on all three.</p>
+                <p>Chrome, Edge, Firefox, and other Chromium-based browsers (Brave, Opera). Install from the <a href="https://chromewebstore.google.com/detail/capturekit-full-page-scre/phhpijfbnldffjblepkknfkpgfpigehi" target="_blank" rel="noopener">Chrome Web Store</a>, the <a href="https://microsoftedge.microsoft.com/addons/detail/npagjmpnhehcaniaegcgihcdpbakmpkg" target="_blank" rel="noopener">Microsoft Edge Add-ons</a> store, or <a href="https://addons.mozilla.org/en-US/firefox/addon/capturekit-screenshot-annotate/" target="_blank" rel="noopener">Firefox Add-ons</a>. Google Drive sharing is Chrome/Edge only — Firefox lacks the identity API that powers it. Smart Caption, ✨ Improve and Ask… need a browser with the built-in Prompt API (currently Chrome); elsewhere those buttons simply don't appear. Every other feature works the same on all three.</p>
             </details>
             <details>
                 <summary>Can I contribute or report a bug?</summary>
